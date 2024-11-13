@@ -4,10 +4,10 @@ function db_conn()
 {
     try {
         // データベースの接続情報を設定します
-        $db_name = 'masumi1214_gs_kadai11';     // データベース名
-        $db_host = 'mysql3101.db.sakura.ne.jp'; // DBホスト
-        $db_id   = 'masumi1214_gs_kadai11';     // ユーザー名
-        $db_pw   = 'mieko0623'; 
+        $db_name = '';     // データベース名
+        $db_host = ''; // DBホスト
+        $db_id   = '';     // ユーザー名
+        $db_pw   = ''; 
         
         // DSN (Data Source Name) を作成してデータベースに接続
         $server_info = 'mysql:dbname=' . $db_name . ';charset=utf8;host=' . $db_host;
