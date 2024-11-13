@@ -1,0 +1,57 @@
+<?php
+session_start();
+include 'db_connect.php';
+
+// データベース接続
+$pdo = db_conn();
+
+// 過去の診断データを取得するクエリ
+$sql = "SELECT dog_name, body_type, exercise, food_frequency, water_intake, personality, favorite_play, health_condition, activity_level, created_at FROM dog_diagnosis ORDER BY created_at DESC";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$diagnosis_records = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>診断履歴</title>
+    <style>
+        /* 必要に応じてデザインをカスタマイズしてください */
+        body { font-family: Arial, sans-serif; background-color: #f0f0f0; }
+        .container { width: 80%; margin: 20px auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>診断履歴</h1>
+    <table>
+        <tr>
+            <th>愛犬の名前</th><th>体型</th><th>運動量</th><th>食事の頻度</th><th>水分摂取</th><th>性格</th><th>好きな遊び</th><th>健康状態</th><th>活動レベル</th><th>診断日</th>
+        </tr>
+        <?php foreach ($diagnosis_records as $record): ?>
+        <tr>
+            <td><?php echo htmlspecialchars($record['dog_name']); ?></td>
+            <td><?php echo htmlspecialchars($record['body_type']); ?></td>
+            <td><?php echo htmlspecialchars($record['exercise']); ?></td>
+            <td><?php echo htmlspecialchars($record['food_frequency']); ?></td>
+            <td><?php echo htmlspecialchars($record['water_intake']); ?></td>
+            <td><?php echo htmlspecialchars($record['personality']); ?></td>
+            <td><?php echo htmlspecialchars($record['favorite_play']); ?></td>
+            <td><?php echo htmlspecialchars($record['health_condition']); ?></td>
+            <td><?php echo htmlspecialchars($record['activity_level']); ?></td>
+            <td><?php echo htmlspecialchars($record['created_at']); ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+</div>
+
+</body>
+</html>
